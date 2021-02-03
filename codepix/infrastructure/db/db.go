@@ -31,7 +31,7 @@ func ConnectDB(env string) *gorm.DB {
 	var err error
 
 	if env != "test" {
-		dns = os.Getenv(dns)
+		dns = os.Getenv("dns")
 		db, err = gorm.Open(os.Getenv("dbType"), dns)
 	} else {
 		dns = os.Getenv("dnsTest")
@@ -39,7 +39,7 @@ func ConnectDB(env string) *gorm.DB {
 	}
 
 	if err != nil {
-		log.Fatalf("Error connecting to batabase: %v", err)
+		log.Fatalf("Error connecting to database: %v", err)
 	}
 
 	if os.Getenv("debug") == "true" {
