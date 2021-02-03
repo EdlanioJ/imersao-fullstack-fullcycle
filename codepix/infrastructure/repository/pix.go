@@ -7,11 +7,11 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-type PixKeyRepositoryBd struct {
+type PixKeyRepositoryDb struct {
 	Db *gorm.DB
 }
 
-func (r PixKeyRepositoryBd) AddBank(bank *model.Bank) error {
+func (r PixKeyRepositoryDb) AddBank(bank *model.Bank) error {
 	err := r.Db.Create(bank).Error
 
 	if err != nil {
@@ -21,7 +21,7 @@ func (r PixKeyRepositoryBd) AddBank(bank *model.Bank) error {
 	return nil
 }
 
-func (r PixKeyRepositoryBd) AddAccount(account *model.Account) error {
+func (r PixKeyRepositoryDb) AddAccount(account *model.Account) error {
 	err := r.Db.Create(account).Error
 
 	if err != nil {
@@ -31,7 +31,7 @@ func (r PixKeyRepositoryBd) AddAccount(account *model.Account) error {
 	return nil
 }
 
-func (r PixKeyRepositoryBd) RegisterKey(pixKey *model.PixKey) (*model.PixKey, error) {
+func (r PixKeyRepositoryDb) RegisterKey(pixKey *model.PixKey) (*model.PixKey, error) {
 	err := r.Db.Create(pixKey).Error
 	if err != nil {
 		return nil, err
@@ -39,7 +39,7 @@ func (r PixKeyRepositoryBd) RegisterKey(pixKey *model.PixKey) (*model.PixKey, er
 	return pixKey, nil
 }
 
-func (r PixKeyRepositoryBd) FindKeyByKind(key string, kind string) (*model.PixKey, error) {
+func (r PixKeyRepositoryDb) FindKeyByKind(key string, kind string) (*model.PixKey, error) {
 	var pixKey model.PixKey
 
 	r.Db.Preload("Account.Bank").First(pixKey, "kind = ? and key = ?", kind, key)
@@ -51,7 +51,7 @@ func (r PixKeyRepositoryBd) FindKeyByKind(key string, kind string) (*model.PixKe
 	return &pixKey, nil
 }
 
-func (r PixKeyRepositoryBd) FindAccount(id string) (*model.Account, error) {
+func (r PixKeyRepositoryDb) FindAccount(id string) (*model.Account, error) {
 	var account model.Account
 
 	r.Db.Preload("Bank").First(account, "id = ?", id)
@@ -63,7 +63,7 @@ func (r PixKeyRepositoryBd) FindAccount(id string) (*model.Account, error) {
 	return &account, nil
 }
 
-func (r PixKeyRepositoryBd) FindBank(id string) (*model.Bank, error) {
+func (r PixKeyRepositoryDb) FindBank(id string) (*model.Bank, error) {
 	var bank model.Bank
 
 	r.Db.First(bank, "id = ?", id)

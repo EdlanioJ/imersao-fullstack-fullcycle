@@ -7,11 +7,11 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-type TransactionRepositoryBd struct {
+type TransactionRepositoryDb struct {
 	Db *gorm.DB
 }
 
-func (t *TransactionRepositoryBd) Register(transaction *model.Transaction) error {
+func (t *TransactionRepositoryDb) Register(transaction *model.Transaction) error {
 	err := t.Db.Create(transaction).Error
 
 	if err != nil {
@@ -21,7 +21,7 @@ func (t *TransactionRepositoryBd) Register(transaction *model.Transaction) error
 	return nil
 }
 
-func (t *TransactionRepositoryBd) Save(transaction *model.Transaction) error {
+func (t *TransactionRepositoryDb) Save(transaction *model.Transaction) error {
 	err := t.Db.Save(transaction).Error
 
 	if err != nil {
@@ -31,7 +31,7 @@ func (t *TransactionRepositoryBd) Save(transaction *model.Transaction) error {
 	return nil
 }
 
-func (t *TransactionRepositoryBd) Find(id string) (*model.Transaction, error) {
+func (t *TransactionRepositoryDb) Find(id string) (*model.Transaction, error) {
 	var transaction model.Transaction
 
 	t.Db.Preload("AccountFrom.Bank").First(transaction, "id = ?", id)
