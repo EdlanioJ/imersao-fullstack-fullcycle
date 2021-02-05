@@ -28,8 +28,11 @@ func Publish(msg string, topic string, producer *ckafka.Producer, deliveryChan c
 	}
 
 	err := producer.Produce(message, deliveryChan)
+	if err != nil {
+		return err
+	}
 
-	return err
+	return nil
 }
 
 func DeliveryReport(deliveryChan chan ckafka.Event) {
