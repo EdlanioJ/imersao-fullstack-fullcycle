@@ -4,8 +4,8 @@ import { AppModule } from './app.module';
 import { ModelNotFoundExceptionFilter } from './exception-filters/model-not-found-exception-filter';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix('api/v1');
+  const app = await NestFactory.create(AppModule, { cors: true });
+  app.setGlobalPrefix('/api/v1');
   app.useGlobalFilters(new ModelNotFoundExceptionFilter());
   app.connectMicroservice({
     transport: Transport.KAFKA,
